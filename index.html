@@ -2,120 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Upload Files</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
-        body {
-            background: linear-gradient(180deg, #ffffff 0%, #dcdcdc 100%);
-            color: #000000;
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 600px;
-            background-color: #ffffff;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 50px auto;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        #file-list {
-            margin-top: 20px;
-            padding: 10px;
-            background-color: #f0f0f0;
-            border-radius: 5px;
-        }
-
-        .custom-file {
-            margin-bottom: 15px;
-        }
-
-        #customFile {
-            display: none;
-        }
-
-        .btn-primary {
-            background-color: #2196F3;
-        }
-
-        .btn-primary.btn-block {
-            background-color: #4CAF50;
-            margin-top: 10px;
-        }
-
-        h1 {
-            color: #000000;
-            text-transform: uppercase;
-            font-weight: bold;
-        }
-
-        #drop-area {
-            border: 2px dashed #ffffff;
-            border-radius: 10px;
-            padding: 40px;
-            text-align: center;
-            cursor: pointer;
-            background-color: #f0efef;
-        }
-
-        .success-message {
-            text-align: center;
-            margin-top: 20px;
-            padding: 20px;
-            background-color: #87CEEB;
-            border-radius: 10px;
-            display: none;
-        }
-    </style>
+    <title>Upload File</title>
 </head>
 <body>
-    <div class="container">
-        <h1 class="mb-4 text-center">Upload Files</h1>
-
-        <form id="uploadForm" action="/upload" method="post" enctype="multipart/form-data">
-            <div id="drop-area" class="mb-4">
-                <label for="customFile">Drag and drop files here</label>
-                <input type="file" class="custom-file-input" id="customFile" name="files[]" accept=".txt,.pdf,.jpg" multiple required>
-                <br>
-                <button type="button" class="btn btn-primary mt-3" onclick="browseFiles()">Browse Files</button>
-            </div>
-
-            <div id="file-list">
-                <h5>Selected Files:</h5>
-                <ul id="selected-files"></ul>
-            </div>
-
-            <button type="button" class="btn btn-primary btn-block" onclick="submitForm()">Upload Files</button>
-        </form>
-
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-        <script>
-            function browseFiles() {
-                document.getElementById('customFile').click();
-            }
-
-            function submitForm() {
-                document.getElementById('uploadForm').submit();
-            }
-
-            document.getElementById('customFile').addEventListener('change', function() {
-                var label = document.getElementById('customFile');
-                label.innerHTML = this.files.length + ' file(s) selected';
-
-                // Display selected files in the list
-                var fileList = document.getElementById('selected-files');
-                fileList.innerHTML = '';
-                for (var i = 0; i < this.files.length; i++) {
-                    var listItem = document.createElement('li');
-                    listItem.textContent = this.files[i].name;
-                    fileList.appendChild(listItem);
-                }
-            });
-        </script>
-    </div>
+    <h1>Upload a file</h1>
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" accept=".txt,.pdf,.jpg">
+        <button type="submit">Upload</button>
+    </form>
 </body>
 </html>
