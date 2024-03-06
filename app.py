@@ -4,9 +4,9 @@ import boto3
 app = Flask(__name__)
 
 # Replace with your S3 bucket name and access credentials
-S3_BUCKET_NAME = "testbucket-375"
-AWS_ACCESS_KEY_ID = "AKIA3WKM46OFHLP6P7HD"
-AWS_SECRET_ACCESS_KEY = "rRiHgHYrMfaN8gRr64YBt/QHLoCycdsQmx6oQK0S"
+S3_BUCKET_NAME = "your_bucket_name"
+AWS_ACCESS_KEY_ID = "your_access_id"
+AWS_SECRET_ACCESS_KEY = "your_acess_key"
 
 @app.route("/")
 def index():
