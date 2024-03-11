@@ -14,18 +14,12 @@
 
         .container {
             max-width: 600px;
-            background-color: #ffffff;
+            background-color: #ebe2e2;
             border-radius: 10px;
             padding: 20px;
             margin: 50px auto;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        #file-list {
-            margin-top: 20px;
-            padding: 10px;
-            background-color: #f0f0f0;
-            border-radius: 5px;
+            text-align: center;
         }
 
         .custom-file {
@@ -36,10 +30,10 @@
             display: none;
         }
 
-        .btn-primary {
-            background-color: #2196F3;
+        .btn-secondary {
+            margin-top: 20px;
         }
-
+        
         .btn-primary.btn-block {
             background-color: #4CAF50;
             margin-top: 10px;
@@ -60,26 +54,21 @@
             background-color: #f0efef;
         }
 
-        .success-message {
-            text-align: center;
-            margin-top: 20px;
-            padding: 20px;
-            background-color: #87CEEB;
-            border-radius: 10px;
-            display: none;
+        .dragover {
+            background-color: #c0c0c0;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1 class="mb-4 text-center">Upload Files</h1>
+        <h1 class="mb-4">Upload Files</h1>
 
         <form id="uploadForm" action="/upload" method="post" enctype="multipart/form-data">
             <div id="drop-area" class="mb-4">
                 <label for="customFile">Drag and drop files here</label>
-                <input type="file" class="custom-file-input" id="customFile" name="files[]" accept=".txt,.pdf,.jpg,.csv,.doc,.docx,.xls,.xlsx" multiple required>
+                <input type="file" class="custom-file-input" id="customFile" name="files[]" accept=".txt,.pdf,.jpg,.csv,.doc,.docx,.xls,.xlsx,.pptx" multiple required>
                 <br>
-                <button type="button" class="btn btn-primary mt-3" onclick="browseFiles()">Browse Files</button>
+                <button type="button" class="btn btn-primary mt-3" onclick="document.getElementById('customFile').click()">Browse Files</button>
             </div>
 
             <div id="file-list">
@@ -87,35 +76,64 @@
                 <ul id="selected-files"></ul>
             </div>
 
-            <button type="button" class="btn btn-primary btn-block" onclick="submitForm()">Upload Files</button>
+            <button type="button" id="uploadButton" class="btn btn-primary btn-block">Upload Files</button>
         </form>
+    </div>
 
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-        <script>
-            function browseFiles() {
-                document.getElementById('customFile').click();
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Add event listener for drag and drop
+            var dropArea = document.getElementById('drop-area');
+            dropArea.addEventListener('dragover', handleDragOver, false);
+            dropArea.addEventListener('drop', handleFileDrop, false);
+
+            function handleDragOver(event) {
+                event.preventDefault();
+                event.stopPropagation();
+                dropArea.classList.add('dragover');
             }
 
-            function submitForm() {
-                document.getElementById('uploadForm').submit();
+            function handleFileDrop(event) {
+                event.preventDefault();
+                event.stopPropagation();
+                dropArea.classList.remove('dragover');
+                var files = event.dataTransfer.files;
+                handleFiles(files);
             }
 
-            document.getElementById('customFile').addEventListener('change', function() {
+            // Function to handle selected files
+            function handleFiles(files) {
                 var label = document.getElementById('customFile');
-                label.innerHTML = this.files.length + ' file(s) selected';
+                label.innerHTML = files.length + ' file(s) selected';
 
                 // Display selected files in the list
                 var fileList = document.getElementById('selected-files');
-                fileList.innerHTML = '';
-                for (var i = 0; i < this.files.length; i++) {
+                for (var i = 0; i < files.length; i++) {
                     var listItem = document.createElement('li');
-                    listItem.textContent = this.files[i].name;
+                    listItem.textContent = files[i].name;
                     fileList.appendChild(listItem);
                 }
+            }
+
+            // Add event listener for file input change
+            document.getElementById('customFile').addEventListener('change', function() {
+                handleFiles(this.files);
             });
-        </script>
-    </div>
+
+            // Add event listener for upload button click
+            document.getElementById('uploadButton').addEventListener('click', function() {
+                submitForm();
+            });
+
+            // Submit form function
+            function submitForm() {
+                document.getElementById('uploadForm').submit();
+            }
+        });
+    </script>
 </body>
 </html>
