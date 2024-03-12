@@ -1,0 +1,7 @@
+boto3
+streamlit
+argon2-cffi
+streamlit-login-auth-ui
+streamlit-cookies-manager
+streamlit-option-menu
+streamlit-lottie

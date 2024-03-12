@@ -1,0 +1,5 @@
+# Ignore _secret_auth_.json file
+*_secret_auth_.json
+
+# Ignore venv directory
+venv/
